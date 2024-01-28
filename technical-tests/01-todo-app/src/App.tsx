@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TaskForm } from "./components/TaskForm";
 import { TaskList } from "./components/TaskList";
@@ -18,7 +18,10 @@ export function App() {
   const hasCompletedTasks = taskList.some((task) => task.isCompleted);
 
   const addTask = (newTask: Task) => {
-    setTaskList([...taskList, newTask]);
+    const newTaskList = [...taskList, newTask];
+    setTaskList(newTaskList);
+
+    window.localStorage.setItem("taskList", JSON.stringify(newTaskList));
   };
 
   const toggleCompleteTask = (id: string) => {
@@ -36,6 +39,12 @@ export function App() {
   const clearCompletedTasks = () => {
     setTaskList(taskList.filter((task) => !task.isCompleted));
   };
+
+  useEffect(() => {
+    const taskListFromStorage = window.localStorage.getItem("taskList");
+
+    taskListFromStorage && setTaskList(JSON.parse(taskListFromStorage));
+  }, []);
 
   return (
     <main className="container">
