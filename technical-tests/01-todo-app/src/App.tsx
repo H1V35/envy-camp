@@ -3,6 +3,8 @@ import { nanoid } from "nanoid";
 import { AddTaskForm } from "./components/AddTaskForm";
 import { List } from "./components/List";
 
+//los tipos de las entidades solo deben tener definidos las propiedades intrinsecas del objeto
+//nombre Task
 export type TaskProps = {
   id?: string;
   name?: string;
@@ -12,6 +14,7 @@ export type TaskProps = {
   deleteTask?: (id: string) => void;
 };
 
+//usar filter
 const countIncompleteTasks = (list: TaskProps[]) => {
   return list.reduce((count: number, task: TaskProps) => {
     if (!task.isCompleted) {
@@ -22,6 +25,8 @@ const countIncompleteTasks = (list: TaskProps[]) => {
 };
 
 export function App() {
+  //este estado sobra
+  // y solo es necesario el name y description, ya que se hardcodea el id y el isCompleted
   const [task, setTask] = useState<TaskProps>({
     id: "",
     name: "",
@@ -30,6 +35,7 @@ export function App() {
   });
   const [list, setList] = useState<TaskProps[]>([]);
 
+  //recibir la tarea y asignar a la lista
   const addTask = () => {
     const newTask = task;
 
@@ -89,6 +95,7 @@ export function App() {
           } remaining`}
         </p>
 
+        {/* Utilizar método some y extraerlo a una variable */}
         {list.find((task) => task.isCompleted === true) && (
           <button onClick={clearCompletedTasks} className="clear-task-button">
             Clear Completed
