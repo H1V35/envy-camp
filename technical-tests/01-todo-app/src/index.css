@@ -42,12 +42,18 @@ button {
   cursor: pointer;
 }
 
+ul {
+  padding: 0;
+  margin: 0;
+}
+
 footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
+  height: 42px;
 }
 
 footer p {
@@ -117,20 +123,32 @@ footer p {
   width: 100%;
   height: 50px;
   padding: 0;
+
+  transition: all;
+  transition-duration: 300ms;
 }
 
-.placeholder {
+.todo .add-task-button:disabled {
+  color: #ffffffaa;
+
+  background-color: #bebebe;
+  border: 1px solid #999;
+
+  cursor: default;
+}
+
+.task {
   display: grid;
   grid-template-areas:
-    "task task trash-can"
+    "name name trash-can"
     "description description description";
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr auto;
   gap: 0.3rem;
 }
 
-.placeholder .complete-task-button {
-  grid-area: task;
+.task .complete-task-button {
+  grid-area: name;
 
   color: #000;
   font-size: 1.2rem;
@@ -144,11 +162,16 @@ footer p {
   padding: 0;
 }
 
-.placeholder .complete-task-button img {
+.task .task-completed {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.task .complete-task-button img {
   width: 2rem;
 }
 
-.placeholder p {
+.task p {
   grid-area: description;
 
   color: #6a6a6a;
@@ -157,7 +180,7 @@ footer p {
   margin: 0;
 }
 
-.placeholder .trash-can-button {
+.task .trash-can-button {
   grid-area: trash-can;
 
   background-color: #fff;
