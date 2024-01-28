@@ -8,6 +8,9 @@ type AddTaskFormProps = {
 
 export function AddTaskForm({ task, setTask, addTask }: AddTaskFormProps) {
   return (
+    //agregar lógica para construir nueva tarea utilizando la funcion
+
+    //cambiar onClick del botón por onSubmit del form
     <form className="add-task-form">
       <input
         type="text"
