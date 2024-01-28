@@ -10,18 +10,23 @@ export type Task = {
   isCompleted: boolean;
 };
 
+const loadTaskListFromStorage = () => {
+  const taskListFromStorage = window.localStorage.getItem("taskList");
+
+  return taskListFromStorage ? JSON.parse(taskListFromStorage) : [];
+};
+
 export function App() {
-  const [taskList, setTaskList] = useState<Task[]>([]);
+  const [taskList, setTaskList] = useState<Task[]>(() =>
+    loadTaskListFromStorage()
+  );
 
   const incompletedTasks = taskList.filter((task) => !task.isCompleted).length;
 
   const hasCompletedTasks = taskList.some((task) => task.isCompleted);
 
   const addTask = (newTask: Task) => {
-    const newTaskList = [...taskList, newTask];
-    setTaskList(newTaskList);
-
-    window.localStorage.setItem("taskList", JSON.stringify(newTaskList));
+    setTaskList([...taskList, newTask]);
   };
 
   const toggleCompleteTask = (id: string) => {
@@ -41,10 +46,8 @@ export function App() {
   };
 
   useEffect(() => {
-    const taskListFromStorage = window.localStorage.getItem("taskList");
-
-    taskListFromStorage && setTaskList(JSON.parse(taskListFromStorage));
-  }, []);
+    window.localStorage.setItem("taskList", JSON.stringify(taskList));
+  }, [taskList]);
 
   return (
     <main className="container">
