@@ -1,20 +1,23 @@
 import trashCan from "../assets/icons/trash-can.svg";
 import check from "../assets/icons/check.svg";
 import checked from "../assets/icons/checked.svg";
-import { TaskProps } from "../App";
+import { Task } from "../App";
 
-export function Task({
-  id = "",
-  name = "Task name",
-  description = "Description",
-  isCompleted = true,
-  toggleCompleteTask = () => {},
-  deleteTask = () => {},
-}: TaskProps) {
+type TaskListItemProps = {
+  task: Task;
+  toggleCompleteTask?: (id: string) => void;
+  deleteTask?: (id: string) => void;
+};
+
+export function TaskListItem({
+  task: { id, name, description, isCompleted },
+  toggleCompleteTask,
+  deleteTask,
+}: TaskListItemProps) {
   return (
-    <li className="task">
+    <li className={`task ${id === "id" && "placeholder"}`}>
       <button
-        onClick={() => toggleCompleteTask(id)}
+        onClick={() => toggleCompleteTask?.(id)}
         className={`complete-task-button ${isCompleted && "task-completed"}`}
       >
         <img
@@ -22,10 +25,10 @@ export function Task({
           alt={isCompleted ? "Checked icon" : "Check icon"}
           className="check"
         />
-        {name}
+        <span>{name}</span>
       </button>
 
-      <button onClick={() => deleteTask(id)} className="trash-can-button">
+      <button onClick={() => deleteTask?.(id)} className="trash-can-button">
         <img src={trashCan} alt="Trash can" className="trash-can-icon" />
       </button>
 

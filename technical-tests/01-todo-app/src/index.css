@@ -43,6 +43,10 @@ button {
 }
 
 ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
   padding: 0;
   margin: 0;
 }
@@ -65,23 +69,23 @@ footer p {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 0.6rem;
+  gap: 30px;
 
   background: #fff;
   border: 1px solid #000;
   border-radius: 30px;
 
   box-sizing: border-box;
-  min-width: 480px;
+  width: 480px;
   min-height: 480px;
-  padding: 30px;
+  padding: 30px 50px;
 }
 
 .todo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  gap: 20px;
 
   width: 100%;
 }
@@ -89,13 +93,13 @@ footer p {
 .todo h1 {
   font-size: 2.4rem;
 
-  margin: 0 0 0.6rem 0;
+  margin: 0;
 }
 
 .todo .add-task-form {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 13px;
 
   width: 100%;
 }
@@ -171,8 +175,16 @@ footer p {
   width: 2rem;
 }
 
+.task span {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
 .task p {
   grid-area: description;
+
+  overflow: hidden;
 
   color: #6a6a6a;
   text-overflow: ellipsis;
@@ -189,6 +201,10 @@ footer p {
   display: flex;
   align-items: center;
   padding: 0;
+}
+
+.task.placeholder {
+  opacity: 30%;
 }
 
 .trash-can-icon {
