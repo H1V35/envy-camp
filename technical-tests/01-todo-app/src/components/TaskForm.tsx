@@ -16,7 +16,7 @@ export function TaskForm({ addTask }: TaskFormProps) {
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!task.name) return;
+    if (!task.name?.trim()) return;
 
     const newTask = {
       id: nanoid(),
