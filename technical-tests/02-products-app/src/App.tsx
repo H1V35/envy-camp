@@ -17,24 +17,52 @@ const STATUS = {
   NOT_AVAILABLE: "notAvailable",
 };
 
+const SORT_BY = {
+  NONE: "none",
+  NAME_ASC: "nameAsc",
+  NAME_DESC: "nameDesc",
+  PRICE_ASC: "priceAsc",
+  PRICE_DESC: "priceDesc",
+};
+
 export function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState(STATUS.ALL);
+  const [sortBy, setSortBy] = useState(SORT_BY.NONE);
 
   const filterAndSortProducts = () => {
     let products = productsFromJSON;
 
-    if (nameFilter?.trim()) {
-      products = products.filter((product) => {
+    nameFilter?.trim() &&
+      (products = products.filter((product) => {
         return product.name.toLowerCase().includes(nameFilter.toLowerCase());
-      });
-    }
+      }));
 
-    if (statusFilter !== STATUS.ALL) {
-      products = products.filter((product) => {
+    statusFilter !== STATUS.ALL &&
+      (products = products.filter((product) => {
         return product.available === (statusFilter === STATUS.AVAILABLE);
-      });
-    }
+      }));
+
+    sortBy === SORT_BY.NONE
+      ? (products = products.sort((a, b) => a.id - b.id))
+      : (products = products.sort((a, b) => {
+          switch (sortBy) {
+            case SORT_BY.NAME_ASC:
+              return a.name.localeCompare(b.name);
+
+            case SORT_BY.NAME_DESC:
+              return b.name.localeCompare(a.name);
+
+            case SORT_BY.PRICE_ASC:
+              return a.price - b.price;
+
+            case SORT_BY.PRICE_DESC:
+              return b.price - a.price;
+
+            default:
+              return 0;
+          }
+        }));
 
     return products;
   };
@@ -49,6 +77,13 @@ export function App() {
   const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     setStatusFilter(value);
+
+    filterAndSortProducts();
+  };
+
+  const handleSortByChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setSortBy(value);
 
     filterAndSortProducts();
   };
@@ -76,6 +111,18 @@ export function App() {
             <option value={STATUS.ALL}>All</option>
             <option value={STATUS.AVAILABLE}>Available</option>
             <option value={STATUS.NOT_AVAILABLE}>Not available</option>
+          </select>
+
+          <select
+            value={sortBy}
+            onChange={handleSortByChange}
+            className="w-[20%] px-6 pt-3 pb-2 bg-white border rounded-xl border-solid border-black focus:outline-purple-300"
+          >
+            <option value={SORT_BY.NONE}>None</option>
+            <option value={SORT_BY.NAME_DESC}>Name ↓</option>
+            <option value={SORT_BY.NAME_ASC}>Name ↑</option>
+            <option value={SORT_BY.PRICE_DESC}>Price ↓</option>
+            <option value={SORT_BY.PRICE_ASC}>Price ↑</option>
           </select>
         </form>
       </section>
