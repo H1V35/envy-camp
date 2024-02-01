@@ -11,24 +11,44 @@ export type Product = {
   available: boolean;
 };
 
-const products = productsFromJSON;
+const STATUS = {
+  ALL: "all",
+  AVAILABLE: "available",
+  NOT_AVAILABLE: "notAvailable",
+};
 
 export function App() {
   const [nameFilter, setNameFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState(STATUS.ALL);
 
   const filterAndSortProducts = () => {
-    if (!nameFilter?.trim()) return products;
+    let products = productsFromJSON;
 
-    const filteredProducts = products.filter((product) => {
-      return product.name.toLowerCase().includes(nameFilter.toLowerCase());
-    });
+    if (nameFilter?.trim()) {
+      products = products.filter((product) => {
+        return product.name.toLowerCase().includes(nameFilter.toLowerCase());
+      });
+    }
 
-    return filteredProducts;
+    if (statusFilter !== STATUS.ALL) {
+      products = products.filter((product) => {
+        return product.available === (statusFilter === STATUS.AVAILABLE);
+      });
+    }
+
+    return products;
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setNameFilter(value);
+
+    filterAndSortProducts();
+  };
+
+  const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setStatusFilter(value);
 
     filterAndSortProducts();
   };
@@ -47,6 +67,16 @@ export function App() {
             placeholder="Search by name..."
             className="w-[50%] px-6 pt-3 pb-2 bg-white border rounded-xl border-solid border-black focus:outline-purple-300"
           />
+
+          <select
+            value={statusFilter}
+            onChange={handleStatusChange}
+            className="w-[24%] px-6 pt-3 pb-2 bg-white border rounded-xl border-solid border-black focus:outline-purple-300"
+          >
+            <option value={STATUS.ALL}>All</option>
+            <option value={STATUS.AVAILABLE}>Available</option>
+            <option value={STATUS.NOT_AVAILABLE}>Not available</option>
+          </select>
         </form>
       </section>
 
