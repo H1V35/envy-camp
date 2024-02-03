@@ -1,14 +1,24 @@
-import { ChangeEvent } from "react";
+import { STATUS, SORT_BY, Status, SortBy } from "../constants";
 
-import { STATUS, SORT_BY } from "../constants";
+function assertStatus(value: string): asserts value is Status {
+  if (!Object.values(STATUS).includes(value as Status)) {
+    throw new Error(`Invalid status: ${value}`);
+  }
+}
+
+// function assertSortBy(value: string): asserts value is SortBy {
+//   if (!Object.values(SORT_BY).includes(value as SortBy)) {
+//     throw new Error(`Invalid sort by: ${value}`);
+//   }
+// }
 
 type FilterProps = {
   nameFilter: string;
   statusFilter: string;
   sortBy: string;
-  handleNameChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleStatusChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  handleSortByChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  handleNameChange: (value: string) => void;
+  handleStatusChange: (value: Status) => void;
+  handleSortByChange: (value: SortBy) => void;
 };
 
 export function Filter({
@@ -19,12 +29,18 @@ export function Filter({
   handleStatusChange,
   handleSortByChange,
 }: FilterProps) {
+  const handleStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    assertStatus(value);
+    handleStatusChange(value);
+  };
+
   return (
     <form className="flex gap-3 text-xl">
       <input
         type="text"
         value={nameFilter}
-        onChange={handleNameChange}
+        onChange={(e) => handleNameChange(e.target.value)}
         name="name"
         placeholder="Search by name..."
         className="w-[50%] px-6 pt-3 pb-2 bg-white border rounded-xl border-solid border-black focus:outline-purple-300"
@@ -32,7 +48,7 @@ export function Filter({
 
       <select
         value={statusFilter}
-        onChange={handleStatusChange}
+        onChange={handleStatus}
         className="w-[24%] px-6 pt-3 pb-2 bg-white border rounded-xl border-solid border-black focus:outline-purple-300"
       >
         <option value={STATUS.ALL}>All</option>
@@ -42,7 +58,7 @@ export function Filter({
 
       <select
         value={sortBy}
-        onChange={handleSortByChange}
+        onChange={(e) => handleSortByChange(e.target.value as SortBy)}
         className="w-[20%] px-6 pt-3 pb-2 bg-white border rounded-xl border-solid border-black focus:outline-purple-300"
       >
         <option value={SORT_BY.NONE}>None</option>

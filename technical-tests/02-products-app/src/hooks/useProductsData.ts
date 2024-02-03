@@ -1,78 +1,61 @@
-import { useState, ChangeEvent } from "react";
-
+import React from "react";
 import productsFromJSON from "../lib/products.json";
-import { STATUS, SORT_BY } from "../constants";
+import { Product } from "../App";
+import { STATUS, SORT_BY, Status, SortBy } from "../constants";
+import { sortProducts } from "../logic/sortProductsLogic";
+
+type filterAndSortProductsProps = {
+  products: Product[];
+  nameFilter: string;
+  statusFilter: string;
+  sortBy: SortBy;
+};
 
 const filterAndSortProducts = ({
+  products,
   nameFilter,
   statusFilter,
   sortBy,
-}: {
-  nameFilter: string;
-  statusFilter: string;
-  sortBy: string;
-}) => {
-  let products = productsFromJSON;
+}: filterAndSortProductsProps) => {
+  let filteredProducts = products.filter((product) => {
+    return product.name.toLowerCase().includes(nameFilter.toLowerCase());
+  });
 
-  nameFilter?.trim() &&
-    (products = products.filter((product) => {
-      return product.name.toLowerCase().includes(nameFilter.toLowerCase());
-    }));
+  if (statusFilter !== STATUS.ALL) {
+    filteredProducts = products.filter((product) => {
+      const shouldBeAvailable = statusFilter === STATUS.AVAILABLE;
+      return product.available === shouldBeAvailable;
+    });
+  }
 
-  statusFilter !== STATUS.ALL &&
-    (products = products.filter((product) => {
-      return product.available === (statusFilter === STATUS.AVAILABLE);
-    }));
-
-  sortBy === SORT_BY.NONE
-    ? (products = products.sort((a, b) => a.id - b.id))
-    : (products = products.sort((a, b) => {
-        switch (sortBy) {
-          case SORT_BY.NAME_ASC:
-            return a.name.localeCompare(b.name);
-
-          case SORT_BY.NAME_DESC:
-            return b.name.localeCompare(a.name);
-
-          case SORT_BY.PRICE_ASC:
-            return a.price - b.price;
-
-          case SORT_BY.PRICE_DESC:
-            return b.price - a.price;
-
-          default:
-            return 0;
-        }
-      }));
-
-  return products;
+  return sortProducts(filteredProducts, sortBy);
 };
 
 export function useProductsData() {
-  const [nameFilter, setNameFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState(STATUS.ALL);
-  const [sortBy, setSortBy] = useState(SORT_BY.NONE);
+  const [nameFilter, setNameFilter] = React.useState("");
+  const [statusFilter, setStatusFilter] = React.useState<Status>(STATUS.ALL);
+  const [sortBy, setSortBy] = React.useState<SortBy>(SORT_BY.NONE);
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+  const handleNameChange = (value: string) => {
     setNameFilter(value);
   };
 
-  const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target;
+  const handleStatusChange = (value: Status) => {
     setStatusFilter(value);
   };
 
-  const handleSortByChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target;
+  const handleSortByChange = (value: SortBy) => {
     setSortBy(value);
   };
 
-  const filteredProducts = filterAndSortProducts({
-    nameFilter,
-    statusFilter,
-    sortBy,
-  });
+  const filteredProducts = React.useMemo(() => {
+    return filterAndSortProducts({
+      products: productsFromJSON,
+      nameFilter,
+      statusFilter,
+      sortBy,
+    });
+  }, [nameFilter, statusFilter, sortBy]);
 
   return {
     filteredProducts,
