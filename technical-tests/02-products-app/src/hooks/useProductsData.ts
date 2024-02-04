@@ -2,7 +2,7 @@ import React from "react";
 import productsFromJSON from "../lib/products.json";
 import { Product } from "../App";
 import { STATUS, SORT_BY, Status, SortBy } from "../constants";
-import { sortProducts } from "../logic/sortProductsLogic";
+import { sortProducts } from "../lib/sortProductsLogic";
 
 type filterAndSortProductsProps = {
   products: Product[];
