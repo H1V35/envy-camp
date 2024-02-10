@@ -1,3 +1,7 @@
 export function App() {
-  return <h1>simple-blog-app</h1>;
+  return (
+    <main>
+      <h1 className="mt-8 text-5xl">Simple Blog App</h1>
+    </main>
+  );
 }
