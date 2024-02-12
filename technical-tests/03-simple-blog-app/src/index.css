@@ -18,14 +18,27 @@
 }
 
 body {
-  min-height: 90vh;
-  margin: 3rem 1.5rem;
+  min-height: 95%;
+
+  width: 95%;
+  max-width: 1900px;
+  margin: 1.5rem 0;
+
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
 
   display: flex;
   justify-content: center;
 
   border: #000000 solid 1px;
   border-radius: 30px;
+
+  background: #fff;
+}
+
+div#root {
+  width: 100%;
 }
 
 @font-face {
