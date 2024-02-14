@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
+import { CommentItem } from "../components/CommentItem";
 import backIcon from "../assets/images/back-icon.svg";
-import userIcon from "../assets/images/user-icon.svg";
 import sendIcon from "../assets/images/send-icon.svg";
 
 export default function PostPage() {
   return (
     <main className="px-4 sm:px-8 py-4 flex flex-col gap-6 sm:gap-8">
       <header className="flex items-center gap-4">
-        <Link to="/" className="w-10 mt-4 sm:w-12">
+        <Link to="/" className="w-10 sm:w-12 mt-4">
           <img src={backIcon} alt="Home button icon" />
         </Link>
 
@@ -20,37 +20,9 @@ export default function PostPage() {
         <h2 className="ml-2 text-2xl sm:text-3xl">Comments</h2>
 
         <div className="p-2 sm:px-4 rounded-3xl border border-black flex flex-col gap-2">
-          <article className="px-2 sm:px-4 py-2 rounded-xl border border-black flex items-start gap-4">
-            <picture className="rounded-full border border-black">
-              <img src={userIcon} alt="User icon" className="w-6" />
-            </picture>
-
-            <div className="flex flex-col gap-2">
-              <header className="flex gap-4">
-                <h3>name</h3>
-
-                <h4 className="text-zinc-400">(email)</h4>
-              </header>
-
-              <p>body</p>
-            </div>
-          </article>
-
-          <article className="px-2 sm:px-4 py-2 rounded-xl border border-black flex items-start gap-4">
-            <picture className="rounded-full border border-black">
-              <img src={userIcon} alt="User icon" className="w-6" />
-            </picture>
-
-            <div className="flex flex-col gap-2">
-              <header className="flex gap-4">
-                <h3>name</h3>
-
-                <h4 className="text-zinc-400">(email)</h4>
-              </header>
-
-              <p>body</p>
-            </div>
-          </article>
+          <CommentItem />
+          <CommentItem />
+          <CommentItem />
 
           <form action="" className="w-full px-1 flex justify-center gap-1">
             <input
