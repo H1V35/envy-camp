@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function PostItem() {
   return (
     <article className="w-auto p-4 rounded-3xl border border-black flex flex-col justify-between gap-6">
@@ -8,9 +10,12 @@ export function PostItem() {
       </section>
 
       <footer className="flex justify-center">
-        <button className="w-9/12 p-1 rounded-xl border border-black">
+        <Link
+          to={`post/1`}
+          className="w-9/12 p-1 rounded-xl border border-black text-center"
+        >
           Read more
-        </button>
+        </Link>
       </footer>
     </article>
   );
