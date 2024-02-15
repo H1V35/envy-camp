@@ -1,20 +1,8 @@
-import React from "react";
+import { usePosts } from "../hooks/usePosts";
 import { PostItem } from "../components/PostItem";
-import { fetchPosts } from "../services";
-import { Post } from "../types";
 
 export default function HomePage() {
-  const [posts, setPosts] = React.useState<Post[]>([]);
-
-  React.useEffect(() => {
-    const getPosts = async () => {
-      const newPosts = await fetchPosts();
-
-      setPosts(newPosts);
-    };
-
-    getPosts();
-  }, []);
+  const { posts } = usePosts();
 
   return (
     <main className="px-4 sm:px-8 py-4 flex flex-col items-center gap-6 sm:gap-8">
