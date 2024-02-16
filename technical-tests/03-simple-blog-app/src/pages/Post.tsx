@@ -6,7 +6,6 @@ import sendIcon from "../assets/images/send-icon.svg";
 
 export default function PostPage() {
   const { post, comments } = usePost();
-
   const navigate = useNavigate();
 
   const handleClick = () => {
