@@ -1,8 +1,8 @@
-import { Post } from "../types";
-
-const POSTS_ENDPOINT = `https://jsonplaceholder.typicode.com/posts`;
+import { Comment, Post } from "../types";
 
 export async function fetchPosts(): Promise<Post[]> {
+  const POSTS_ENDPOINT = `https://jsonplaceholder.typicode.com/posts`;
+
   try {
     const res = await fetch(POSTS_ENDPOINT);
     const posts: Post[] = await res.json();
@@ -21,5 +21,18 @@ export async function fetchPost(postEndpoint: string): Promise<Post> {
     return posts;
   } catch (e) {
     throw new Error("Error loading post");
+  }
+}
+
+export async function fetchComments(
+  commentsEndpoint: string
+): Promise<Comment[]> {
+  try {
+    const res = await fetch(commentsEndpoint);
+    const comments: Comment[] = await res.json();
+
+    return comments;
+  } catch (e) {
+    throw new Error("Error loading comments");
   }
 }
