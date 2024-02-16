@@ -1,36 +1,17 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { usePost } from "../hooks/usePost";
+import { useNavigate } from "react-router-dom";
 import { CommentItem } from "../components/CommentItem";
-import { Post, Comment } from "../types";
-import { fetchPost, fetchComments } from "../services";
 import backIcon from "../assets/images/back-icon.svg";
 import sendIcon from "../assets/images/send-icon.svg";
 
 export default function PostPage() {
-  const [post, setPost] = React.useState<Post>();
-  const [comments, setComments] = React.useState<Comment[]>();
-
-  const { postId } = useParams();
-  const POST_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}`;
-  const COMMENTS_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
+  const { post, comments } = usePost();
 
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("../..", { relative: "path" });
   };
-
-  React.useEffect(() => {
-    const getPosts = async () => {
-      const newPost = await fetchPost(POST_ENDPOINT);
-      const newComments = await fetchComments(COMMENTS_ENDPOINT);
-
-      setPost(newPost);
-      setComments(newComments);
-    };
-
-    getPosts();
-  }, [POST_ENDPOINT, COMMENTS_ENDPOINT]);
 
   return (
     <main className="px-4 sm:px-8 py-4 flex flex-col gap-6 sm:gap-8">
