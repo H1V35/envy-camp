@@ -5,11 +5,15 @@ import { fetchPost, fetchComments } from "../services";
 
 export function usePost() {
   const [post, setPost] = React.useState<Post>();
-  const [comments, setComments] = React.useState<Comment[]>();
+  const [comments, setComments] = React.useState<Comment[]>([]);
 
   const { postId } = useParams();
   const POST_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}`;
   const COMMENTS_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
+
+  const addComment = (newComment: Comment) => {
+    setComments([...comments, newComment]);
+  };
 
   React.useEffect(() => {
     const getPosts = async () => {
@@ -23,5 +27,5 @@ export function usePost() {
     getPosts();
   }, [POST_ENDPOINT, COMMENTS_ENDPOINT]);
 
-  return { post, comments };
+  return { post, comments, addComment };
 }

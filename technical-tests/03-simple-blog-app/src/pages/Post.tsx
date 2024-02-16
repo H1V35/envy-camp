@@ -1,15 +1,43 @@
+import React from "react";
+import { useParams } from "react-router-dom";
 import { usePost } from "../hooks/usePost";
 import { useNavigate } from "react-router-dom";
 import { CommentItem } from "../components/CommentItem";
 import backIcon from "../assets/images/back-icon.svg";
 import sendIcon from "../assets/images/send-icon.svg";
 
+const timestamp = Date.now();
+
 export default function PostPage() {
-  const { post, comments } = usePost();
+  const [comment, setComment] = React.useState({ body: "" });
+  const { post, comments, addComment } = usePost();
+  const { postId } = useParams();
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("../..", { relative: "path" });
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!comment.body?.trim()) return;
+
+    const newComment = {
+      postId: Number(postId),
+      id: Math.floor(Math.random() * timestamp),
+      name: "Hive",
+      email: "hive@dev.es",
+      ...comment,
+    };
+
+    addComment(newComment);
+    setComment({ body: "" });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    setComment({ ...comment, body: value });
   };
 
   return (
@@ -35,9 +63,14 @@ export default function PostPage() {
             return <CommentItem key={comment.id} comment={comment} />;
           })}
 
-          <form action="" className="w-full px-1 flex justify-center gap-1">
+          <form
+            onSubmit={handleFormSubmit}
+            className="w-full px-1 flex justify-center gap-1"
+          >
             <input
               type="text"
+              value={comment.body}
+              onChange={handleInputChange}
               placeholder="What are your thoughts?"
               className="w-full px-3 py-1 bg-transparent rounded-lg border border-black"
             />
