@@ -12,3 +12,14 @@ export async function fetchPosts(): Promise<Post[]> {
     throw new Error("Error loading posts");
   }
 }
+
+export async function fetchPost(postEndpoint: string): Promise<Post> {
+  try {
+    const res = await fetch(postEndpoint);
+    const posts: Post = await res.json();
+
+    return posts;
+  } catch (e) {
+    throw new Error("Error loading post");
+  }
+}

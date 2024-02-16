@@ -1,20 +1,47 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { CommentItem } from "../components/CommentItem";
+import { Post } from "../types";
+import { fetchPost } from "../services";
 import backIcon from "../assets/images/back-icon.svg";
 import sendIcon from "../assets/images/send-icon.svg";
 
 export default function PostPage() {
+  const [post, setPost] = React.useState<Post>();
+
+  const { postId } = useParams();
+  const POST_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}`;
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("../..", { relative: "path" });
+  };
+
+  React.useEffect(() => {
+    const getPosts = async () => {
+      const newPost = await fetchPost(POST_ENDPOINT);
+
+      setPost(newPost);
+    };
+
+    getPosts();
+  }, [POST_ENDPOINT]);
+
   return (
     <main className="px-4 sm:px-8 py-4 flex flex-col gap-6 sm:gap-8">
-      <header className="flex items-center gap-4">
-        <Link to="/" className="w-10 sm:w-12 mt-4">
+      <header className="flex items-start gap-4">
+        <button
+          onClick={handleClick}
+          className="w-10 sm:w-12 mt-4 flex-shrink-0"
+        >
           <img src={backIcon} alt="Home button icon" />
-        </Link>
+        </button>
 
-        <h1 className="w-auto mt-4 text-4xl sm:text-5xl">Post title</h1>
+        <h1 className="mt-4 flex-grow text-4xl sm:text-5xl">{post?.title}</h1>
       </header>
 
-      <p className="ml-2 text-xl sm:text-2xl">Post body</p>
+      <p className="ml-2 text-xl sm:text-2xl">{post?.body}</p>
 
       <section className="w-full gap-4 sm:gap-8">
         <h2 className="ml-2 text-2xl sm:text-3xl">Comments</h2>
