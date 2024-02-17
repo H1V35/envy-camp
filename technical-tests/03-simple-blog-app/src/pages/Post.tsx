@@ -1,23 +1,16 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useGetPost } from "../hooks/useGetPost";
+import { useParams } from "react-router-dom";
 import { useGetComments } from "../hooks/useGetComments";
+import { PostDetails } from "../components/PostDetails";
 import { CommentItem } from "../components/CommentItem";
-import backIcon from "../assets/images/back-icon.svg";
 import sendIcon from "../assets/images/send-icon.svg";
 
 const timestamp = Date.now();
 
 export default function PostPage() {
   const [comment, setComment] = React.useState({ body: "" });
-  const { post } = useGetPost();
   const { comments, addComment } = useGetComments();
   const { postId } = useParams();
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("../..", { relative: "path" });
-  };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,18 +36,7 @@ export default function PostPage() {
 
   return (
     <main className="px-4 sm:px-8 py-4 flex flex-col gap-6 sm:gap-8">
-      <header className="flex items-start gap-4">
-        <button
-          onClick={handleClick}
-          className="w-10 sm:w-12 mt-4 flex-shrink-0"
-        >
-          <img src={backIcon} alt="Home button icon" />
-        </button>
-
-        <h1 className="mt-4 flex-grow text-4xl sm:text-5xl">{post?.title}</h1>
-      </header>
-
-      <p className="ml-2 text-xl sm:text-2xl">{post?.body}</p>
+      <PostDetails />
 
       <section className="w-full gap-4 sm:gap-8">
         <h2 className="ml-2 text-2xl sm:text-3xl">Comments</h2>
