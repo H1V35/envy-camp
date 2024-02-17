@@ -9,17 +9,19 @@ export function useGetComments() {
   const COMMENTS_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
 
   const addComment = (newComment: Comment) => {
-    setComments([...comments, newComment]);
+    const newComments = [...comments, newComment];
+
+    setComments(newComments);
   };
 
   React.useEffect(() => {
-    const getPosts = async () => {
-      const newComments = await fetchComments(COMMENTS_ENDPOINT);
+    const getComments = async () => {
+      const fetchedComments = await fetchComments(COMMENTS_ENDPOINT);
 
-      setComments(newComments);
+      setComments(fetchedComments);
     };
 
-    getPosts();
+    getComments();
   }, [COMMENTS_ENDPOINT]);
 
   return { comments, addComment };
