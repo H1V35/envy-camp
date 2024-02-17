@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { usePost } from "../hooks/usePost";
+import { useGetPost } from "../hooks/useGetPost";
 import { useNavigate } from "react-router-dom";
 import { CommentItem } from "../components/CommentItem";
 import backIcon from "../assets/images/back-icon.svg";
@@ -10,7 +10,7 @@ const timestamp = Date.now();
 
 export default function PostPage() {
   const [comment, setComment] = React.useState({ body: "" });
-  const { post, comments, addComment } = usePost();
+  const { post, comments, addComment } = useGetPost();
   const { postId } = useParams();
   const navigate = useNavigate();
 

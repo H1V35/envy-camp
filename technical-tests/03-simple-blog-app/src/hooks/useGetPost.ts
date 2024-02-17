@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Post, Comment } from "../types";
 import { fetchPost, fetchComments } from "../services";
 
-export function usePost() {
+export function useGetPost() {
   const [post, setPost] = React.useState<Post>();
   const [comments, setComments] = React.useState<Comment[]>([]);
 
