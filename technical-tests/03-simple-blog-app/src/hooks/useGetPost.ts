@@ -9,13 +9,13 @@ export function useGetPost() {
   const POST_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}`;
 
   React.useEffect(() => {
-    const getPosts = async () => {
-      const newPost = await fetchPost(POST_ENDPOINT);
+    const getPost = async () => {
+      const fetchedPost = await fetchPost(POST_ENDPOINT);
 
-      setPost(newPost);
+      setPost(fetchedPost);
     };
 
-    getPosts();
+    getPost();
   }, [POST_ENDPOINT]);
 
   return { post };

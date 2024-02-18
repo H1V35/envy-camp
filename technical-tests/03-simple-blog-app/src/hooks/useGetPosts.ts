@@ -7,9 +7,9 @@ export function useGetPosts() {
 
   React.useEffect(() => {
     const getPosts = async () => {
-      const newPosts = await fetchPosts();
+      const fetchedPosts = await fetchPosts();
 
-      setPosts(newPosts);
+      setPosts(fetchedPosts);
     };
 
     getPosts();

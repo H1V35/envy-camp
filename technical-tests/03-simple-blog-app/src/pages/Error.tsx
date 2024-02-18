@@ -4,7 +4,7 @@ import thisIsFine from "../assets/images/this-is-fine-dog.gif";
 
 export default function Page404() {
   return (
-    <section className="px-4 sm:px-8 py-4 flex flex-col gap-6 sm:gap-8">
+    <main className="px-4 sm:px-8 py-4 flex flex-col gap-6 sm:gap-8">
       <header className="flex items-start gap-4">
         <Link to="/" className="flex-shrink-0 w-10 sm:w-12 mt-4">
           <img src={homeIcon} alt="Home button icon" />
@@ -20,6 +20,6 @@ export default function Page404() {
         alt="This is fine dog gif"
         className="w-full rounded-3xl"
       />
-    </section>
+    </main>
   );
 }

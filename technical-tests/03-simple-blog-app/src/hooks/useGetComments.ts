@@ -9,9 +9,7 @@ export function useGetComments() {
   const COMMENTS_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
 
   const addComment = (newComment: Comment) => {
-    const newComments = [...comments, newComment];
-
-    setComments(newComments);
+    setComments([...comments, newComment]);
   };
 
   React.useEffect(() => {
