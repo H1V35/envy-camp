@@ -1,26 +1,22 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { Comment } from "../types";
 import { fetchComments } from "../services";
 
-export function useGetComments() {
+export function useGetComments(postId: string) {
   const [comments, setComments] = React.useState<Comment[]>([]);
-  const { postId } = useParams();
-  const COMMENTS_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const addComment = (newComment: Comment) => {
     setComments([...comments, newComment]);
   };
 
   React.useEffect(() => {
-    const getComments = async () => {
-      const fetchedComments = await fetchComments(COMMENTS_ENDPOINT);
+    (async () => {
+      setIsLoading(true);
+      await fetchComments(postId).then(setComments);
+      setIsLoading(false);
+    })();
+  }, [postId]);
 
-      setComments(fetchedComments);
-    };
-
-    getComments();
-  }, [COMMENTS_ENDPOINT]);
-
-  return { comments, addComment };
+  return { comments, addComment, isLoading };
 }

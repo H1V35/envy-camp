@@ -18,6 +18,7 @@ export function PostItem({ post: { id, title, body } }: PostItemProps) {
         <Link
           to={`post/${id}`}
           className="w-9/12 p-1 rounded-xl border border-black text-center"
+          state={{ title, body, id }}
         >
           Read more
         </Link>

@@ -1,9 +1,13 @@
+import { useParams } from "react-router-dom";
 import { useGetComments } from "../hooks/useGetComments";
 import { CommentItem } from "../components/CommentItem";
 import { CommentForm } from "./CommentForm";
 
 export function CommentsList() {
-  const { comments, addComment } = useGetComments();
+  const { postId } = useParams();
+  const { comments, addComment, isLoading } = useGetComments(postId!);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <section className="w-full gap-4 sm:gap-8">
