@@ -22,7 +22,7 @@ export function PostItem({ post: { id, title, body } }: { post: Post }) {
       <footer className="flex justify-center">
         <Link
           to={`post/${id}`}
-          className="w-9/12 p-1 rounded-xl border border-black text-center"
+          className="w-9/12 p-1 rounded-xl border border-black text-center transition duration-300 hover:scale-105 hover:bg-[#8cd4ff] hover:border-[#0069d1] hover:text-[#0069d1]"
           state={{ title, body, id }}
           onMouseEnter={prefetchPost}
         >

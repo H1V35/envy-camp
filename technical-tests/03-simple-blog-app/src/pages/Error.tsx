@@ -6,7 +6,10 @@ export default function Page404() {
   return (
     <main className="px-4 sm:px-8 py-4 flex flex-col gap-6 sm:gap-8">
       <header className="flex items-start gap-4">
-        <Link to="/" className="flex-shrink-0 w-10 sm:w-12 mt-4">
+        <Link
+          to="/"
+          className="flex-shrink-0 w-10 sm:w-12 mt-4 transition duration-300 hover:scale-105"
+        >
           <img src={homeIcon} alt="Home button icon" />
         </Link>
 

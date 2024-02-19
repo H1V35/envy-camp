@@ -31,7 +31,7 @@ export function PostDetails() {
       <header className="flex items-start gap-4">
         <button
           onClick={handleClick}
-          className="w-10 sm:w-12 mt-4 flex-shrink-0"
+          className="w-10 sm:w-12 mt-4 flex-shrink-0 transition duration-300 hover:scale-105"
         >
           <img src={backIcon} alt="Home button icon" />
         </button>

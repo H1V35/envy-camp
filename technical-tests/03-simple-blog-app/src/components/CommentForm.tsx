@@ -43,7 +43,7 @@ export function CommentForm() {
         className="w-full px-3 py-1 bg-transparent rounded-lg border border-black"
       />
 
-      <button className="pl-3 pr-2 bg-[#8cd4ff] rounded-lg border border-[#0069d1] text-[#0069d1] flex items-center">
+      <button className="pl-3 pr-2 bg-[#8cd4ff] rounded-lg border border-[#0069d1] text-[#0069d1] flex items-center transition duration-300 hover:scale-105">
         <img src={sendIcon} alt="Send icon" className="w-6" />
       </button>
     </form>
