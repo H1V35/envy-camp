@@ -1,20 +1,11 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./pages/Error";
-import HomePage from "./pages/Home";
-import PostPage from "./pages/Post";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <HomePage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/post/:postId",
-    element: <PostPage />,
-  },
-]);
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/tanstack-query";
+import { AppRoutes } from "./routes";
 
 export function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppRoutes />
+    </QueryClientProvider>
+  );
 }

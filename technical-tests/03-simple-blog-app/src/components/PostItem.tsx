@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+import { queryClient } from "../lib/tanstack-query";
 import { Post } from "../types";
+import { fetchComments } from "../services";
 
-type PostItemProps = {
-  post: Post;
-};
+export function PostItem({ post: { id, title, body } }: { post: Post }) {
+  const prefetchPost = async () => {
+    await queryClient.prefetchQuery({
+      queryKey: ["comments", id],
+      queryFn: () => fetchComments(id.toString()),
+    });
+  };
 
-export function PostItem({ post: { id, title, body } }: PostItemProps) {
   return (
     <article className="w-auto p-4 rounded-3xl border border-black flex flex-col justify-between gap-6">
       <section className="flex flex-col gap-2">
@@ -19,6 +24,7 @@ export function PostItem({ post: { id, title, body } }: PostItemProps) {
           to={`post/${id}`}
           className="w-9/12 p-1 rounded-xl border border-black text-center"
           state={{ title, body, id }}
+          onMouseEnter={prefetchPost}
         >
           Read more
         </Link>

@@ -1,19 +1,16 @@
-import React from "react";
-import { Post } from "../types";
+import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "../services";
 
 export function useGetPosts() {
-  const [posts, setPosts] = React.useState<Post[]>([]);
+  const {
+    data: posts,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchPosts,
+  });
 
-  React.useEffect(() => {
-    const getPosts = async () => {
-      const fetchedPosts = await fetchPosts();
-
-      setPosts(fetchedPosts);
-    };
-
-    getPosts();
-  }, []);
-
-  return { posts };
+  return { posts, isLoading, isError, error };
 }

@@ -1,13 +1,11 @@
 import { Comment } from "../types";
 import userIcon from "../assets/images/user-icon.svg";
 
-type CommentItemProps = {
-  comment: Comment;
-};
-
 export function CommentItem({
   comment: { name, email, body },
-}: CommentItemProps) {
+}: {
+  comment: Comment;
+}) {
   return (
     <article className="px-2 sm:px-4 py-2 rounded-xl border border-black flex items-start gap-4">
       <picture className="flex-shrink-0 rounded-full border border-black">

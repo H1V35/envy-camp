@@ -1,22 +1,17 @@
-import React from "react";
-import { Comment } from "../types";
+import { useQuery } from "@tanstack/react-query";
 import { fetchComments } from "../services";
 
 export function useGetComments(postId: string) {
-  const [comments, setComments] = React.useState<Comment[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const {
+    data: comments,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["comments", postId],
+    queryFn: () => fetchComments(postId),
+    enabled: !!postId,
+  });
 
-  const addComment = (newComment: Comment) => {
-    setComments([...comments, newComment]);
-  };
-
-  React.useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await fetchComments(postId).then(setComments);
-      setIsLoading(false);
-    })();
-  }, [postId]);
-
-  return { comments, addComment, isLoading };
+  return { comments, isLoading, isError, error };
 }

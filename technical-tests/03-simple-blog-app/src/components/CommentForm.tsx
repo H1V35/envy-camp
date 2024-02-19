@@ -1,15 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Comment } from "../types";
 import sendIcon from "../assets/images/send-icon.svg";
-
-type CommentFormProps = {
-  addComment: (comment: Comment) => void;
-};
 
 const timestamp = Date.now();
 
-export function CommentForm({ addComment }: CommentFormProps) {
+export function CommentForm() {
   const [comment, setComment] = React.useState({ body: "" });
   const { postId } = useParams();
 
@@ -26,7 +21,7 @@ export function CommentForm({ addComment }: CommentFormProps) {
       ...comment,
     };
 
-    addComment(newComment);
+    console.log(newComment);
     setComment({ body: "" });
   };
 

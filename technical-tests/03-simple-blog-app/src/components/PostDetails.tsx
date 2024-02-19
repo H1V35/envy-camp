@@ -1,9 +1,8 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useGetPost } from "../hooks/useGetPost";
 import backIcon from "../assets/images/back-icon.svg";
 
 export function PostDetails() {
-  const { post } = useGetPost();
   const {
     state,
   }: {
@@ -13,11 +12,19 @@ export function PostDetails() {
       id?: string;
     };
   } = useLocation();
+  const { postId } = useParams();
+  const { post, isLoading, isError, error } = useGetPost(postId!);
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("../..", { relative: "path" });
   };
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (isError) return <div>Error: {error?.message}</div>;
+
+  if (!post) return null;
 
   return (
     <>
@@ -30,11 +37,11 @@ export function PostDetails() {
         </button>
 
         <h1 className="mt-4 flex-grow text-4xl sm:text-5xl">
-          {state?.title || post?.title}
+          {state?.title || post.title}
         </h1>
       </header>
 
-      <p className="ml-2 text-xl sm:text-2xl">{state?.body || post?.body}</p>
+      <p className="ml-2 text-xl sm:text-2xl">{state?.body || post.body}</p>
     </>
   );
 }
