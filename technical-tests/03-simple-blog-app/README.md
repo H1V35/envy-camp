@@ -39,3 +39,10 @@ These tools help maintain a high standard of code quality and are essential for 
 This application consumes data from a REST API to retrieve posts and comments. The API used is `jsonplaceholder` and can be found [here](https://jsonplaceholder.typicode.com/).
 
 Note: Be sure to review the API documentation to fully understand how to interact with it.
+
+### Wireframe
+
+<div align="center">
+  <img src="public/project-view-1.png" alt="React Simple Blog Application view 1">
+  <img src="public/project-view-2.png" alt="React Simple Blog Application view 2">
+</div>
