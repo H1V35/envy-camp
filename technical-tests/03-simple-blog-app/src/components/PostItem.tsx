@@ -6,7 +6,7 @@ import { fetchComments } from "../services";
 export function PostItem({ post: { id, title, body } }: { post: Post }) {
   const prefetchPost = async () => {
     await queryClient.prefetchQuery({
-      queryKey: ["comments", id],
+      queryKey: ["comments", id.toString()],
       queryFn: () => fetchComments(id.toString()),
     });
   };
