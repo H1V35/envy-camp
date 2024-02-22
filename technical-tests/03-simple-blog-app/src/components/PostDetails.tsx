@@ -1,17 +1,8 @@
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetPost } from "../hooks/useGetPost";
 import backIcon from "../assets/images/back-icon.svg";
 
 export function PostDetails() {
-  const {
-    state,
-  }: {
-    state: {
-      title?: string;
-      body?: string;
-      id?: string;
-    };
-  } = useLocation();
   const { postId } = useParams();
   const { post, isLoading, isError, error } = useGetPost(postId!);
   const navigate = useNavigate();
@@ -36,12 +27,10 @@ export function PostDetails() {
           <img src={backIcon} alt="Home button icon" />
         </button>
 
-        <h1 className="mt-4 flex-grow text-4xl sm:text-5xl">
-          {state?.title || post.title}
-        </h1>
+        <h1 className="mt-4 flex-grow text-4xl sm:text-5xl">{post.title}</h1>
       </header>
 
-      <p className="ml-2 text-xl sm:text-2xl">{state?.body || post.body}</p>
+      <p className="ml-2 text-xl sm:text-2xl">{post.body}</p>
     </>
   );
 }
