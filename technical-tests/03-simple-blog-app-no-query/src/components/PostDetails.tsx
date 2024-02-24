@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetPost } from "../hooks/useGetPost";
 import backIcon from "../assets/images/back-icon.svg";
 
 export function PostDetails() {
-  const { post, isLoading } = useGetPost();
+  const { postId } = useParams();
+  const { post, isLoading } = useGetPost(postId!);
   const navigate = useNavigate();
 
   const handleClick = () => {
