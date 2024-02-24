@@ -5,18 +5,17 @@ import { fetchPost } from "../services";
 
 export function useGetPost() {
   const [post, setPost] = React.useState<Post>();
+  const [isLoading, setIsLoading] = React.useState(false);
   const { postId } = useParams();
   const POST_ENDPOINT = `https://jsonplaceholder.typicode.com/posts/${postId}`;
 
   React.useEffect(() => {
-    const getPost = async () => {
-      const fetchedPost = await fetchPost(POST_ENDPOINT);
-
-      setPost(fetchedPost);
-    };
-
-    getPost();
+    (async () => {
+      setIsLoading(true);
+      await fetchPost(POST_ENDPOINT).then(setPost);
+      setIsLoading(false);
+    })();
   }, [POST_ENDPOINT]);
 
-  return { post };
+  return { post, isLoading };
 }
