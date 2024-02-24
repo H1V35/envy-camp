@@ -24,6 +24,7 @@ Basic / Intermediate
 
 - [React](https://reactjs.org/)
 - [React Router](https://reactrouter.com/)
+- [Tanstack Query](https://tanstack.com/query/latest)
 
 ## Code Requirements
 
