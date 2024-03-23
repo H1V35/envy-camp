@@ -1,6 +1,6 @@
 # Repository for Envy Technical Tests
 
-**Note:** In this repository, the solved technical tests will be uploaded. To take on the challenge blindly, go to [https://github.com/handxr/envy-camp](https://github.com/handxr/envy-camp).
+**Note:** Solved technical tests will be uploaded in this repository. To take on the challenge blindly, go to [https://github.com/handxr/envy-camp](https://github.com/handxr/envy-camp).
 
 ## Description
 
